@@ -8,7 +8,7 @@ interface MiwonProviderProps {
 
 function MiwonProvider({ store, children }: MiwonProviderProps) {
   const context = useMemo(() => {
-    return {}
+    return { ...store }
   }, [store])
 
   return (
