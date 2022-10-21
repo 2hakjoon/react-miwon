@@ -1,20 +1,15 @@
 {
   "compilerOptions": {
     "strict": true,
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "ES5",
+    "module": "ES2015",
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": ["dom", "es2017"],
     "jsx": "react",
     "declaration": true,
-    "declarationDir": "./types",
-    "sourceMap": true,
-    "removeComments": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "baseUrl": "./"
+    "declarationDir": "./types"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "src/test"]

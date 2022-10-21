@@ -6,7 +6,7 @@ interface MiwonProviderProps {
   children: ReactNode
 }
 
-function MiwonProvider({ store, children }: MiwonProviderProps) {
+export function MiwonProvider({ store, children }: MiwonProviderProps) {
   const context = useMemo(() => {
     return { ...store }
   }, [store])
@@ -15,5 +15,3 @@ function MiwonProvider({ store, children }: MiwonProviderProps) {
     <MiwonContext.Provider value={context}>{children}</MiwonContext.Provider>
   )
 }
-
-export default MiwonProvider
