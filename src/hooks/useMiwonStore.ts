@@ -1,9 +1,9 @@
-import { Store } from 'miwon'
+import { AddMiwonReturns } from 'miwon'
 import { useContext } from 'react'
 import { MiwonContext } from '../components/MiwonContext'
 
 export const useMiwonStore = () => {
-  const { setState, getState } = useContext<Store>(MiwonContext)
+  const store = useContext<AddMiwonReturns>(MiwonContext)
 
-  return { setState, getState }
+  return { ...store }
 }
