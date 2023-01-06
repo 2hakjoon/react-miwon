@@ -1,13 +1,19 @@
-import { addMiwon } from 'miwon'
-import { MiwonAsyncBoundary, MiwonProvider } from 'react-miwon'
+import {
+  addMiwon,
+  MiwonAsyncBoundary,
+  MiwonErrorBoundary,
+  MiwonProvider
+} from 'react-miwon'
+import { Posts } from './components/Posts'
 
+const store = addMiwon({})
+console.log(store)
 function App() {
-  const store = addMiwon({})
-  console.log(MiwonProvider)
   return (
     <>
-      <MiwonAsyncBoundary />
-      <MiwonProvider store={store}>리액트 앱</MiwonProvider>
+      <MiwonProvider store={store}>
+        리액트 앱<Posts />
+      </MiwonProvider>
     </>
   )
 }
