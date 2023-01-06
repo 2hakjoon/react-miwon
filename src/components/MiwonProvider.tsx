@@ -1,8 +1,9 @@
+import { AddMiwonReturns } from 'miwon'
 import React, { ReactNode, useMemo } from 'react'
 import { MiwonContext } from './MiwonContext'
 
 interface MiwonProviderProps {
-  store: any
+  store: AddMiwonReturns
   children: ReactNode
 }
 
