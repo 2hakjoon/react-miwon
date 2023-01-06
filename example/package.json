@@ -22,7 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "reinst": "npm uninstall miwon && npm install ../"
+    "reInst": "npm uninstall react-miwon && npm install ../"
   },
   "eslintConfig": {
     "extends": [
