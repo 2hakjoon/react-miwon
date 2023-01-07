@@ -3,7 +3,7 @@ import { useMiwonQuery, useMiwonStore } from 'react-miwon'
 
 export const Posts = () => {
   const [] = useState()
-  // const store = useMiwonStore()
-  // console.log('store', store)
+  const store = useMiwonStore()
+  console.log('store', store)
   return <>"Post"</>
 }

@@ -1,9 +1,4 @@
-import {
-  addMiwon,
-  MiwonAsyncBoundary,
-  MiwonErrorBoundary,
-  MiwonProvider
-} from 'react-miwon'
+import { addMiwon, MiwonProvider } from 'react-miwon'
 import { Posts } from './components/Posts'
 
 const store = addMiwon({})
