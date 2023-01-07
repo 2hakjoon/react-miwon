@@ -5,8 +5,7 @@ export const useMiwonQuery = <T, V>(
   url: string,
   normalizer: (res: any) => any
 ) => {
-  const { getState, subscribe, miwonQuery } = useMiwonStore()
-  // const state = useSyncExternalStore(subscribe, getState)
+  const { reflect, miwonQuery } = useMiwonStore()
 
   const [data, setData] = useState<T | null>(null)
   const [loading, setLoading] = useState(false)
@@ -18,6 +17,7 @@ export const useMiwonQuery = <T, V>(
       .then((res: any) => {
         setData(res)
         setLoading(false)
+        reflect()
       })
       .catch((err: any) => {
         setError(err)
