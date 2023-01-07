@@ -1,4 +1,4 @@
-import { useState, useSyncExternalStore } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 import { useMiwonStore } from './useMiwonStore'
 
 export const useMiwonQuery = <T, V>(
@@ -12,7 +12,7 @@ export const useMiwonQuery = <T, V>(
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const fetch = () => {
+  const fetch = (url: string) => {
     setLoading(true)
     miwonQuery(url, normalizer)
       .then((res: any) => {
@@ -23,6 +23,9 @@ export const useMiwonQuery = <T, V>(
         setError(err)
       })
   }
-  fetch()
+
+  useEffect(() => {
+    if (url) fetch(url)
+  }, [url])
   return { data, loading, error }
 }
