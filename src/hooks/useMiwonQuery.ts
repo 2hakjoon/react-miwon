@@ -6,7 +6,7 @@ export const useMiwonQuery = <T, V>(
   normalizer: (res: any) => any
 ) => {
   const { getState, subscribe, miwonQuery } = useMiwonStore()
-  const state = useSyncExternalStore(subscribe, getState)
+  // const state = useSyncExternalStore(subscribe, getState)
 
   const [data, setData] = useState<T | null>(null)
   const [loading, setLoading] = useState(false)
