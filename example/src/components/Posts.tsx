@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { useMiwonQuery, useMiwonStore } from 'react-miwon'
+import { useMiwonSelector, useMiwonStore } from 'react-miwon'
 
 export const Posts = () => {
-  const [] = useState()
   const store = useMiwonStore()
-  console.log('store', store)
+  console.log('store: ', store)
+  const state = useMiwonSelector(state => state.posts)
+  console.log('state: ', state)
   return <>"Post"</>
 }
