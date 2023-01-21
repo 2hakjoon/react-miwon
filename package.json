@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@rollup/plugin-babel": "^6.0.3",
-    "miwon": "^1.0.7",
+    "miwon": "^1.0.9",
     "miwon-boundaries": "^1.0.3",
     "use-sync-external-store": "^1.2.0"
   },
