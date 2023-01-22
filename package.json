@@ -1,6 +1,6 @@
 {
   "name": "react-miwon",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@rollup/plugin-babel": "^6.0.3",
-    "miwon": "^1.0.11",
+    "miwon": "^1.0.12",
     "miwon-boundaries": "^1.0.3",
     "use-sync-external-store": "^1.2.0"
   },
