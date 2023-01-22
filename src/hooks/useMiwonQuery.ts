@@ -14,13 +14,13 @@ export const useMiwonQuery = <T, V>(
   const [error, setError] = useState(null)
 
   if (config.suspense) {
-    throw miwonQuery(fetcher, normalizer)
+    throw miwonQuery(key, fetcher, normalizer)
   }
 
   const fetch = async (fetcher: () => void) => {
     try {
       setLoading(true)
-      const res = await miwonQuery(fetcher, normalizer)
+      const res = await miwonQuery(key, fetcher, normalizer)
 
       setData(res)
       setLoading(false)
