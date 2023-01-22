@@ -1,4 +1,4 @@
-import { addMiwon, MiwonProvider } from 'react-miwon'
+import { addMiwon, MiwonProvider, MiwonSuspense } from 'react-miwon'
 import { PostCaller } from './components/PostCaller'
 import { Posts } from './components/Posts'
 
@@ -20,7 +20,9 @@ function App() {
         <br />
         <Posts />
         <br />
-        <PostCaller />
+        <MiwonSuspense fallback={<>로딩중...</>}>
+          <PostCaller />
+        </MiwonSuspense>
       </MiwonProvider>
     </>
   )

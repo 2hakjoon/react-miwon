@@ -9,10 +9,11 @@ export const useMiwonQuery = <T, V>(
 ) => {
   const { reflect, miwonQuery, getFetchState, setFetchState } = useMiwonStore()
   const [data, setData] = useState<T | null>(getFetchState()[key])
+  console.log('getFetchState()[key]: ', getFetchState()[key])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  if (config.suspense && !data) {
+  if (config.suspense) {
     throw miwonQuery(fetcher, normalizer)
   }
 
@@ -22,7 +23,6 @@ export const useMiwonQuery = <T, V>(
       const res = await miwonQuery(fetcher, normalizer)
 
       setData(res)
-      setFetchState(res)
       setLoading(false)
       reflect()
       return res
