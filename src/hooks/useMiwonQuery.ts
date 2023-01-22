@@ -1,31 +1,39 @@
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { useEffect, useState } from 'react'
 import { useMiwonStore } from './useMiwonStore'
 
 export const useMiwonQuery = <T, V>(
-  url: string,
-  normalizer: (res: any) => any
+  key: string,
+  fetcher: () => void,
+  normalizer: (res: any) => any,
+  config: any
 ) => {
-  const { reflect, miwonQuery } = useMiwonStore()
-
-  const [data, setData] = useState<T | null>(null)
+  const { reflect, miwonQuery, getFetchState, setFetchState } = useMiwonStore()
+  const [data, setData] = useState<T | null>(getFetchState()[key])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const fetch = (url: string) => {
-    setLoading(true)
-    miwonQuery(url, normalizer)
-      .then((res: any) => {
-        setData(res)
-        setLoading(false)
-        reflect()
-      })
-      .catch((err: any) => {
-        setError(err)
-      })
+  const fetch = async (fetcher: () => void) => {
+    try {
+      setLoading(true)
+      const res = await miwonQuery(fetcher, normalizer)
+
+      setData(res)
+      setFetchState(res)
+      setLoading(false)
+      reflect()
+      return res
+    } catch (err: any) {
+      setError(err)
+    }
+  }
+
+  if (config.suspense && !data) {
+    throw fetch(fetcher)
   }
 
   useEffect(() => {
-    if (url) fetch(url)
-  }, [url])
+    if (fetcher) fetch(fetcher)
+  }, [fetcher])
+
   return { data, loading, error }
 }
