@@ -13,7 +13,7 @@ export const useMiwonQuery = <T, V>(
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  if (config.suspense) {
+  if (config.suspense && !data) {
     throw miwonQuery(key, fetcher, normalizer)
   }
 
