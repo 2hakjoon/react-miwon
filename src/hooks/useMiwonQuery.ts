@@ -13,11 +13,7 @@ export const useMiwonQuery = <T, V>(
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  if (config.suspense && !fetchData?.data) {
-    throw [miwonQuery(key, fetcher, normalizer)]
-  }
-
-  const fetch = async (fetcher: () => void) => {
+  const fetch = async () => {
     try {
       setLoading(true)
       const res = await miwonQuery(key, fetcher, normalizer)
@@ -30,8 +26,19 @@ export const useMiwonQuery = <T, V>(
     }
   }
 
+  const thrower = async () => {
+    await miwonQuery(key, fetcher, normalizer)
+    reflect()
+  }
+
   useEffect(() => {
-    if (fetcher && !config.suspense) fetch(fetcher)
+    if (config.suspense) {
+      if (!data && !fetchData?.loading) {
+        throw [thrower()]
+      }
+    } else {
+      fetch()
+    }
   }, [fetcher])
 
   return { data, loading, error }

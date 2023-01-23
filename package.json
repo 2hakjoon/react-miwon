@@ -1,6 +1,6 @@
 {
   "name": "react-miwon",
-  "version": "1.0.27",
+  "version": "1.0.41",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "reInst": "npm uninstall miwon && npm install miwon"
+    "reInst": "npm uninstall miwon && npm install miwon",
+    "pub": "npm run build && npm publish"
   },
   "author": "",
   "license": "ISC",
@@ -31,7 +32,7 @@
   },
   "dependencies": {
     "miwon": "^1.0.14",
-    "miwon-boundaries": "^1.0.7",
+    "miwon-boundaries": "^1.0.10",
     "use-sync-external-store": "^1.2.0"
   },
   "peerDependencies": {
