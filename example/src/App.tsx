@@ -1,4 +1,9 @@
-import { addMiwon, MiwonProvider, MiwonSuspense } from 'react-miwon'
+import {
+  addMiwon,
+  MiwonAsyncBoundary,
+  MiwonProvider,
+  MiwonSuspense
+} from 'react-miwon'
 import { PostCaller } from './components/PostCaller'
 import { Posts } from './components/Posts'
 
@@ -10,9 +15,8 @@ const store = addMiwon({
     baseURL: 'https://my-json-server.typicode.com'
   }
 })
-console.log(store)
 function App() {
-  console.log('나?')
+  console.log('나???', store.getSubscriptions())
   return (
     <>
       <MiwonProvider store={store}>
@@ -20,9 +24,12 @@ function App() {
         <br />
         <Posts />
         <br />
-        <MiwonSuspense fallback={<>로딩중...</>}>
+        <MiwonAsyncBoundary
+          errorFallback={<>에러!</>}
+          suspenseFallback={<>로딩중...</>}
+        >
           <PostCaller />
-        </MiwonSuspense>
+        </MiwonAsyncBoundary>
       </MiwonProvider>
     </>
   )
