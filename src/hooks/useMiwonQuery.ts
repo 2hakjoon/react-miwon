@@ -14,7 +14,7 @@ export const useMiwonQuery = <T, V>(
   const [error, setError] = useState(null)
 
   if (config.suspense && !data) {
-    throw miwonQuery(key, fetcher, normalizer)
+    throw [miwonQuery(key, fetcher, normalizer)]
   }
 
   const fetch = async (fetcher: () => void) => {
