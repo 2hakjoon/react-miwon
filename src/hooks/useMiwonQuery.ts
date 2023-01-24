@@ -3,7 +3,7 @@ import { useMiwonStore } from './useMiwonStore'
 
 interface QueryConfig {
   suspense?: boolean
-  fallback: any
+  fallback?: any
 }
 
 export const useMiwonQuery = <T, V>(
