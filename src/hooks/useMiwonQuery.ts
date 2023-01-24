@@ -11,7 +11,7 @@ export const useMiwonQuery = <T, V>(
   key: string,
   fetcher: () => void,
   normalizer: (res: any) => any,
-  config: QueryConfig
+  config: QueryConfig = {}
 ) => {
   const { reflect, miwonQuery, getFetchState, setState } = useMiwonStore()
   const fetchData = getFetchState()[key]
