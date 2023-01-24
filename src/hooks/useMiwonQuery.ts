@@ -13,10 +13,11 @@ export const useMiwonQuery = <T, V>(
   normalizer: (res: any) => any,
   config: QueryConfig
 ) => {
-  const { reflect, miwonQuery, getFetchState } = useMiwonStore()
+  const { reflect, miwonQuery, getFetchState, setState } = useMiwonStore()
   const fetchData = getFetchState()[key]
 
-  const initData = fetchData?.data || config?.fallback
+  const initData = fetchData?.data || Object.keys(config?.fallback)
+  if (isServerSide()) setState({ [key]: config?.fallback })
 
   const [data, setData] = useState<T | null>(initData)
   const [loading, setLoading] = useState(false)
