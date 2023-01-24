@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { isClientSide, isServerSide } from '../components/utils/runtime'
 import { useMiwonStore } from './useMiwonStore'
 
 interface QueryConfig {
@@ -14,11 +15,14 @@ export const useMiwonQuery = <T, V>(
 ) => {
   const { reflect, miwonQuery, getFetchState } = useMiwonStore()
   const fetchData = getFetchState()[key]
-  const [data, setData] = useState<T | null>(fetchData?.data || config.fallback)
+
+  const initData = fetchData?.data || config?.fallback
+
+  const [data, setData] = useState<T | null>(initData)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const fetch = async () => {
+  const loadingFetcher = async () => {
     try {
       setLoading(true)
       const res = await miwonQuery(key, fetcher, normalizer)
@@ -31,18 +35,20 @@ export const useMiwonQuery = <T, V>(
     }
   }
 
-  const thrower = async () => {
+  const suspenseFetcher = async () => {
     await miwonQuery(key, fetcher, normalizer)
     reflect()
   }
 
   useEffect(() => {
     if (config.suspense) {
-      if (!data && !fetchData?.loading) {
-        throw [thrower()]
+      if (config.fallback) {
+        loadingFetcher()
+      } else if (!data && !fetchData?.loading) {
+        throw [suspenseFetcher()]
       }
     } else {
-      fetch()
+      loadingFetcher()
     }
   }, [fetcher])
 
