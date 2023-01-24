@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useMiwonStore } from './useMiwonStore'
 
+interface QueryConfig {
+  suspense?: boolean
+  fallback: any
+}
+
 export const useMiwonQuery = <T, V>(
   key: string,
   fetcher: () => void,
   normalizer: (res: any) => any,
-  config: any
+  config: QueryConfig
 ) => {
   const { reflect, miwonQuery, getFetchState } = useMiwonStore()
   const fetchData = getFetchState()[key]
-  const [data, setData] = useState<T | null>(fetchData?.data)
+  const [data, setData] = useState<T | null>(fetchData?.data || config.fallback)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
