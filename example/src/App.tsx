@@ -22,7 +22,7 @@ function App() {
       <MiwonProvider store={store}>
         리액트 앱
         <br />
-        <Posts />
+        {/* <Posts /> */}
         <br />
         <MiwonAsyncBoundary
           errorFallback={<>에러!</>}
