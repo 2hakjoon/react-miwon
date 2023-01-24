@@ -17,7 +17,8 @@ export const useMiwonQuery = <T, V>(
   const fetchData = getFetchState()[key]
 
   const initData =
-    fetchData?.data || (config?.fallback && Object.keys(config?.fallback))
+    fetchData?.data ||
+    (config?.fallback ? Object.keys(config?.fallback) : undefined)
   if (isServerSide()) setState({ [key]: config?.fallback })
 
   const [data, setData] = useState<T | null>(initData)
