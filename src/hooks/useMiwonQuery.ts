@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { isClientSide, isServerSide } from '../components/utils/runtime'
 import { useMiwonStore } from './useMiwonStore'
 
 interface QueryConfig {
@@ -14,12 +13,16 @@ export const useMiwonQuery = <T, V>(
   config: QueryConfig = {}
 ) => {
   const { reflect, miwonQuery, getFetchState, setState } = useMiwonStore()
+
+  useEffect(() => {
+    if (config?.fallback) setState({ [key]: config?.fallback })
+  }, [])
+
   const fetchData = getFetchState()[key]
 
   const initData =
     fetchData?.data ||
     (config?.fallback ? Object.keys(config?.fallback) : undefined)
-  if (isServerSide()) setState({ [key]: config?.fallback })
 
   const [data, setData] = useState<T | null>(initData)
   const [loading, setLoading] = useState(false)
