@@ -4,11 +4,12 @@ import { useMiwonStore } from './useMiwonStore'
 interface QueryConfig {
   suspense?: boolean
   fallback?: any
+  variables?: any
 }
 
 export const useMiwonQuery = <T, V>(
   key: string,
-  fetcher: () => void,
+  fetcher: (variables?: V) => any,
   normalizer: (res: any) => any,
   config: QueryConfig = {}
 ) => {
@@ -24,14 +25,14 @@ export const useMiwonQuery = <T, V>(
     fetchData?.data ||
     (config?.fallback ? Object.keys(config?.fallback) : undefined)
 
-  const [data, setData] = useState<T | null>(initData)
+  const [data, setData] = useState<T | undefined>(initData)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const loadingFetcher = async () => {
+  const loadingFetcher = async (variables: V) => {
     try {
       setLoading(true)
-      const res = await miwonQuery(key, fetcher, normalizer)
+      const res = await miwonQuery(key, () => fetcher(variables), normalizer)
       setData(res)
       setLoading(false)
       reflect()
@@ -41,22 +42,30 @@ export const useMiwonQuery = <T, V>(
     }
   }
 
-  const suspenseFetcher = async () => {
-    await miwonQuery(key, fetcher, normalizer)
+  const suspenseFetcher = async (variables: V) => {
+    await miwonQuery(key, () => fetcher(variables), normalizer)
     reflect()
+  }
+
+  const refetch = async (variables: V, config?: QueryConfig) => {
+    if (config?.suspense) {
+      suspenseFetcher(variables)
+    } else {
+      loadingFetcher(variables)
+    }
   }
 
   useEffect(() => {
     if (config.suspense) {
       if (config.fallback) {
-        loadingFetcher()
+        loadingFetcher(config?.variables)
       } else if (!data && !fetchData?.loading) {
-        throw [suspenseFetcher()]
+        throw [suspenseFetcher(config?.variables)]
       }
     } else {
-      loadingFetcher()
+      loadingFetcher(config?.variables)
     }
-  }, [fetcher])
+  }, [])
 
-  return { data, loading, error }
+  return { data, loading, error, refetch }
 }
