@@ -1,6 +1,6 @@
 {
   "name": "react-miwon",
-  "version": "1.0.54",
+  "version": "1.0.55",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -31,7 +31,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "miwon": "^1.0.15",
+    "miwon": "^1.0.16",
     "miwon-boundaries": "^1.0.10",
     "use-sync-external-store": "^1.2.0"
   },
