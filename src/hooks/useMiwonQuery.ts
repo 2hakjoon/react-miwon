@@ -13,8 +13,14 @@ export const useMiwonQuery = <T, V>(
   normalizer: (res: any) => any,
   config: QueryConfig = {}
 ) => {
-  const { reflect, miwonQuery, getFetchState, setState, setFetchState } =
-    useMiwonStore()
+  const {
+    reflect,
+    miwonQuery,
+    getFetchState,
+    setState,
+    setFetchState,
+    getConfig
+  } = useMiwonStore()
 
   useEffect(() => {
     if (config?.fallback) setFetchState({ [key]: config?.fallback })
@@ -58,13 +64,17 @@ export const useMiwonQuery = <T, V>(
 
   useEffect(() => {
     if (config.suspense) {
-      if (config.fallback || (!config.fallback && fetchData)) {
-        loadingFetcher(config?.variables)
-      } else if (!data && !fetchData?.loading) {
+      if (!data) {
         throw [suspenseFetcher(config?.variables)]
+      } else {
+        if (Date.now() - fetchData.lastFetched < getConfig().minFetchInterval) {
+          loadingFetcher(config?.variables)
+        }
       }
     } else {
-      loadingFetcher(config?.variables)
+      if (Date.now() - fetchData.lastFetched < getConfig().minFetchInterval) {
+        loadingFetcher(config?.variables)
+      }
     }
   }, [])
 
