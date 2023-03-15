@@ -13,10 +13,11 @@ export const useMiwonQuery = <T, V>(
   normalizer: (res: any) => any,
   config: QueryConfig = {}
 ) => {
-  const { reflect, miwonQuery, getFetchState, setState } = useMiwonStore()
+  const { reflect, miwonQuery, getFetchState, setState, setFetchState } =
+    useMiwonStore()
 
   useEffect(() => {
-    if (config?.fallback) setState({ [key]: config?.fallback })
+    if (config?.fallback) setFetchState({ [key]: config?.fallback })
   }, [])
 
   const fetchData = getFetchState()[key]
