@@ -62,17 +62,25 @@ export const useMiwonQuery = <T, V>(
     }
   }
 
+  const isStaleFetchedData = () => {
+    if (fetchData?.lastFetched) {
+      return Date.now() - fetchData.lastFetched > getConfig().minFetchInterval
+    } else {
+      return true
+    }
+  }
+
   useEffect(() => {
     if (config.suspense) {
       if (!data) {
         throw [suspenseFetcher(config?.variables)]
       } else {
-        if (Date.now() - fetchData.lastFetched < getConfig().minFetchInterval) {
+        if (isStaleFetchedData()) {
           loadingFetcher(config?.variables)
         }
       }
     } else {
-      if (Date.now() - fetchData.lastFetched < getConfig().minFetchInterval) {
+      if (isStaleFetchedData()) {
         loadingFetcher(config?.variables)
       }
     }
