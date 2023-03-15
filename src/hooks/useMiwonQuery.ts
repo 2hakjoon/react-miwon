@@ -58,7 +58,7 @@ export const useMiwonQuery = <T, V>(
 
   useEffect(() => {
     if (config.suspense) {
-      if (config.fallback || data) {
+      if (config.fallback || (!config.fallback && fetchData)) {
         loadingFetcher(config?.variables)
       } else if (!data && !fetchData?.loading) {
         throw [suspenseFetcher(config?.variables)]
